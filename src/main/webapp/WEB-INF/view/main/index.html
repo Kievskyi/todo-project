@@ -10,10 +10,12 @@
 <body>
 <h1>Hello world</h1>
 
-<tr th:each="task : ${tasks}">
+<tr th:each="task : ${tasks}" >
     <td th:text="${task.id}">ID</td>
     <td th:text="${task.description}">Description</td>
     <td th:text="${task.status}">Status</td>
+    <input type="button" value="Edit" formmethod="post">
+    <input type="button" value="Delete" formmethod="delete">
     <br>
 </tr>
 </body>

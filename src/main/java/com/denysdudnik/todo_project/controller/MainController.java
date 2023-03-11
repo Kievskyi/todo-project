@@ -5,8 +5,7 @@ import com.denysdudnik.todo_project.service.TaskDAOService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -22,6 +21,25 @@ public class MainController {
         List<Task> allTasks = taskService.getAllTasks();
         model.addAttribute("tasks", allTasks);
 
-        return "index";
+        return "main/index";
+    }
+
+    @DeleteMapping("/{id}")
+    public String deleteTask(@PathVariable("id") Long id) {
+        taskService.deleteTask(id);
+
+        return "main/index";
+    }
+
+    @PostMapping("/{id}")
+    public String editTask(@PathVariable("id") Long id) {
+        return null;
+    }
+
+    @PostMapping("/")
+    public String addNewTask(@ModelAttribute("task") Task task) {
+        taskService.addNewTask(task);
+
+        return "main/index";
     }
 }

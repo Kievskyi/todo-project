@@ -8,9 +8,9 @@ public interface TaskDAOService {
 
     public List<Task> getAllTasks();
 
-    public Task addNewTask(Task task);
+    public void addNewTask(Task task);
 
-    public Task editTask(Task task);
+    public void editTask(Task task, long id);
 
-    public Task deleteTask(Task task);
+    public void deleteTask(long id);
 }

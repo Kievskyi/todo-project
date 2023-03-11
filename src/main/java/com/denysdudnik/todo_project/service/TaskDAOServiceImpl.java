@@ -19,17 +19,17 @@ public class TaskDAOServiceImpl implements TaskDAOService{
     }
 
     @Override
-    public Task addNewTask(Task task) {
-        return taskDao.addNewTask(task);
+    public void addNewTask(Task task) {
+        taskDao.addNewTask(task);
     }
 
     @Override
-    public Task editTask(Task task) {
-        return taskDao.editTask(task);
+    public void editTask(Task task, long id) {
+        taskDao.editTask(task, id);
     }
 
     @Override
-    public Task deleteTask(Task task) {
-        return taskDao.deleteTask(task);
+    public void deleteTask(long id) {
+        taskDao.deleteTask(id);
     }
 }

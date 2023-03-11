@@ -24,17 +24,26 @@ public class TaskDAOImpl implements TaskDao{
     }
 
     @Override
-    public Task addNewTask(Task task) {
-        return null;
+    @Transactional
+    public void addNewTask(Task task) {
+        Session session = sessionFactory.openSession();
+        session.persist(task);
     }
 
     @Override
-    public Task editTask(Task task) {
-        return null;
+    @Transactional
+    public void editTask(Task task, long id) {
+        Session session = sessionFactory.openSession();
+        Task taskFromDB = session.find(Task.class, id);
+        taskFromDB.setDescription(task.getDescription());
+        taskFromDB.setStatus(task.getStatus());
     }
 
     @Override
-    public Task deleteTask(Task task) {
-        return null;
+    @Transactional
+    public void deleteTask(long id) {
+        Session session = sessionFactory.openSession();
+        Task taskFromDb = session.find(Task.class, id);
+        session.remove(taskFromDb);
     }
 }
