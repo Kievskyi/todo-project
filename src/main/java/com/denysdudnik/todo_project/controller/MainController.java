@@ -27,7 +27,7 @@ public class MainController {
     @DeleteMapping("/{id}")
     public String deleteTask(@PathVariable("id") Long id) {
         taskService.deleteTask(id);
-
+        
         return "main/index";
     }
 
