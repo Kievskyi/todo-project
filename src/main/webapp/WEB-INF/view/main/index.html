@@ -5,7 +5,7 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>Your tasks</title>
 </head>
 <body>
 <h1>Hello world</h1>
@@ -26,11 +26,9 @@
         </tr>
     </table>
     <br><br>
-    <h3>Add new task:</h3>
-    <form th:method="POST" th:action="@{/}" >
-        <label>Description</label>
-        <input type="text">
-    </form>
+</form>
+<form action="/tasks/newTask" method="get">
+    <input type="submit" value="Add new task">
 </form>
 </body>
 </html>

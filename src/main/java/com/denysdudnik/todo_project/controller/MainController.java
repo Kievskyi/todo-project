@@ -24,22 +24,29 @@ public class MainController {
         return "main/index";
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete")
     public String deleteTask(@PathVariable("id") Long id) {
         taskService.deleteTask(id);
         
         return "main/index";
     }
 
-    @PostMapping("/{id}")
+    @PostMapping("/edit")
     public String editTask(@PathVariable("id") Long id) {
         return null;
     }
 
-    @PostMapping("/")
+    @GetMapping("/newTask")
+    public String newTaskFormPage(Model model) {
+        model.addAttribute("task", new Task());
+
+        return "main/newTask";
+    }
+
+    @PostMapping()
     public String addNewTask(@ModelAttribute("task") Task task) {
         taskService.addNewTask(task);
 
-        return "main/index";
+        return "redirect:/tasks/";
     }
 }
