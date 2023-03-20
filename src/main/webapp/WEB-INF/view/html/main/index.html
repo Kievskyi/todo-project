@@ -1,0 +1,126 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Your tasks</title>
+    <style>
+        body {
+            font-size: 14px;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 20px 0;
+        }
+
+        th, td {
+            text-align: left;
+            padding: 8px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        form {
+            display: inline-block;
+            margin-right: 10px;
+        }
+
+        input[type=text], select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            margin-top: 6px;
+            margin-bottom: 12px;
+        }
+
+        input[type=submit] {
+            background-color: #4CAF50;
+            color: white;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        input[type=submit]:hover {
+            background-color: #45a049;
+        }
+
+        label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 6px;
+        }
+    </style>
+</head>
+<body>
+<h2>Tasks</h2>
+<form action="/tasks/">
+
+    <table>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Description</th>
+            <th>Status</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="task : ${tasks}">
+            <td th:text="${task.id}">ID</td>
+            <td th:text="${task.description}">Description</td>
+            <td th:text="${task.status}">Status</td>
+            <td>
+                <form th:action="@{/tasks/{id}(id=${task.getId()})}" method="get">
+                    <input type="hidden" name="id" th:value="${task.id}"/>
+                    <input type="submit" value="Edit"/>
+                </form>
+            </td>
+            <td>
+                <form th:action="@{/tasks/}" th:method="DELETE">
+                    <input type="hidden" name="id" th:value="${task.id}"/>
+                    <input type="submit" value="Delete"/>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <br>
+</form>
+<br>
+<form th:action="@{/tasks/{number}{size}(number=${number})(size=${size})}" method="get" th:each="pageBtn : ${buttons}" th:object="buttons">
+    <button th:value="${pageBtn}" th:name="${pageBtn}"></button>
+</form>
+
+<form th:method="POST" th:action="@{/tasks/}" th:object="${task}">
+
+    <label for="description">Description: </label>
+    <input type="text" th:field="*{description}" id="description">
+    <br>
+
+    <label for="status">Status: </label>
+    <select id="status" th:field="*{status}">
+        <option th:each="status : ${T(com.denysdudnik.todo_project.enums.Status).values()}"
+                th:value="${status}"
+                th:text="${status}">
+        </option>
+    </select>
+    <br>
+    <input type="submit" value="Add">
+</form>
+
+</body>
+</html>

@@ -6,11 +6,13 @@ import java.util.List;
 
 public interface TaskDAOService {
 
-    public List<Task> getAllTasks();
+    public Task findById(Long id);
+
+    public List<Task> getAllTasks(int number, int size);
 
     public void addNewTask(Task task);
 
     public void editTask(Task task, long id);
 
-    public void deleteTask(long id);
+    public void deleteTask(Task task);
 }

@@ -1,35 +1,50 @@
 package com.denysdudnik.todo_project.service;
 
-import com.denysdudnik.todo_project.dao.TaskDao;
 import com.denysdudnik.todo_project.entity.Task;
+import com.denysdudnik.todo_project.repository.TaskRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
-@RequiredArgsConstructor
 @Service
-public class TaskDAOServiceImpl implements TaskDAOService{
+@RequiredArgsConstructor
+public class TaskDAOServiceImpl implements TaskDAOService {
 
-    private final TaskDao taskDao;
+    private final TaskRepository taskRepository;
 
     @Override
-    public List<Task> getAllTasks() {
-        return taskDao.getAllTasks();
+    public Task findById(Long id) {
+
+        return taskRepository.findById(id).get();
     }
 
     @Override
+    @Transactional
+    public List<Task> getAllTasks(int number, int size) {
+        Pageable page =  PageRequest.of(number, size);
+        return taskRepository.findAll(page).stream().collect(Collectors.toList());
+    }
+
+    @Override
+    @Transactional
     public void addNewTask(Task task) {
-        taskDao.addNewTask(task);
+        taskRepository.save(task);
     }
 
     @Override
+    @Transactional
     public void editTask(Task task, long id) {
-        taskDao.editTask(task, id);
+        taskRepository.save(task);
     }
 
     @Override
-    public void deleteTask(long id) {
-        taskDao.deleteTask(id);
+    @Transactional
+    public void deleteTask(Task task) {
+        taskRepository.delete(task);
     }
 }
