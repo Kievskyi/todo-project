@@ -47,4 +47,10 @@ public class TaskDAOServiceImpl implements TaskDAOService {
     public void deleteTask(Task task) {
         taskRepository.delete(task);
     }
+
+    public Integer getCountOfPages(int number, int size) {
+        Pageable pageable = PageRequest.of(number, size);
+
+        return taskRepository.findAll(pageable).getTotalPages();
+    }
 }

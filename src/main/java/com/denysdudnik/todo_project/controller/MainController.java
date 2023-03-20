@@ -29,6 +29,7 @@ public class MainController {
         List<Task> allTasks = taskService.getAllTasks(number, size);
         model.addAttribute("tasks", allTasks);
         model.addAttribute("task", new Task());
+        model.addAttribute("countOfPages", taskService.getCountOfPages(number, size));
 
         return "html/main/index";
     }

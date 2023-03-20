@@ -15,4 +15,6 @@ public interface TaskDAOService {
     public void editTask(Task task, long id);
 
     public void deleteTask(Task task);
+
+    public Integer getCountOfPages(int number, int size);
 }

@@ -68,42 +68,53 @@
 </head>
 <body>
 <h2>Tasks</h2>
-<form action="/tasks/">
 
-    <table>
-        <thead>
-        <tr>
-            <th>ID</th>
-            <th>Description</th>
-            <th>Status</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="task : ${tasks}">
-            <td th:text="${task.id}">ID</td>
-            <td th:text="${task.description}">Description</td>
-            <td th:text="${task.status}">Status</td>
-            <td>
-                <form th:action="@{/tasks/{id}(id=${task.getId()})}" method="get">
-                    <input type="hidden" name="id" th:value="${task.id}"/>
-                    <input type="submit" value="Edit"/>
-                </form>
-            </td>
-            <td>
-                <form th:action="@{/tasks/}" th:method="DELETE">
-                    <input type="hidden" name="id" th:value="${task.id}"/>
-                    <input type="submit" value="Delete"/>
-                </form>
-            </td>
-        </tr>
-        </tbody>
-    </table>
-    <br>
-</form>
-<br>
-<form th:action="@{/tasks/{number}{size}(number=${number})(size=${size})}" method="get" th:each="pageBtn : ${buttons}" th:object="buttons">
-    <button th:value="${pageBtn}" th:name="${pageBtn}"></button>
-</form>
+<div>
+    <form action="/tasks/">
+        <table>
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Description</th>
+                <th>Status</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="task : ${tasks}">
+                <td th:text="${task.id}">ID</td>
+                <td th:text="${task.description}">Description</td>
+                <td th:text="${task.status}">Status</td>
+                <td>
+                    <form th:action="@{/tasks/{id}(id=${task.getId()})}" method="get">
+                        <input type="hidden" name="id" th:value="${task.id}"/>
+                        <input type="submit" value="Edit"/>
+                    </form>
+                </td>
+                <td>
+                    <form th:action="@{/tasks/}" th:method="DELETE">
+                        <input type="hidden" name="id" th:value="${task.id}"/>
+                        <input type="submit" value="Delete"/>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+        <div>
+            <form th:each="pageNumber : ${#numbers.sequence(1, countOfPages)}">
+                <input type="submit" th:href="@{/tasks/{number}(number=${pageNumber})}" th:value="${pageNumber}">
+            </form>
+        </div>
+
+        <label for="size"></label>
+        <select id="size">
+            <option th:value="5" th:href="@{/tasks/{size}(size=5)}" th:text="5"></option>
+            <option th:value="10" th:href="@{/tasks/{size}(size=10)}" th:text="10"></option>
+        </select>
+    </form>
+</div>
+
+<br><br>
 
 <form th:method="POST" th:action="@{/tasks/}" th:object="${task}">
 
