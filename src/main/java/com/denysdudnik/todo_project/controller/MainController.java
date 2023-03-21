@@ -3,12 +3,10 @@ package com.denysdudnik.todo_project.controller;
 import com.denysdudnik.todo_project.entity.Task;
 import com.denysdudnik.todo_project.service.TaskDAOService;
 import lombok.RequiredArgsConstructor;
-import org.hibernate.engine.jdbc.Size;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 import static java.util.Objects.isNull;
 
@@ -19,17 +17,26 @@ public class MainController {
 
     private final TaskDAOService taskService;
 
-    @GetMapping(value = {"/", "/{number}/{size}"})
-    public String showAllTasks(@PathVariable(value = "size",required = false) Integer size,
-                               @PathVariable(value = "number", required = false) Integer number, Model model) {
+    @GetMapping("/")
+    public String showAllTasks(Model model) {
+        System.out.println("showAllTasks");
 
-        number = isNull(number) ? 0 : number;
-        size = isNull(size) ? 3 : size;
+        return showPaginated(0, model);
+    }
 
-        List<Task> allTasks = taskService.getAllTasks(number, size);
-        model.addAttribute("tasks", allTasks);
+    @GetMapping("/page/{pageNum}")
+    public String showPaginated(@PathVariable(required = false) int pageNum,
+                                Model model) {
+        System.out.println("showPaginated");
+        pageNum = isNull(pageNum) ? 0 : pageNum;
+        int size = 5;
+
+        Page<Task> allTasks = taskService.getAllTasksByPageable(pageNum, size);
+        model.addAttribute("tasks", allTasks.getContent());
         model.addAttribute("task", new Task());
-        model.addAttribute("countOfPages", taskService.getCountOfPages(number, size));
+        model.addAttribute("currentPage", pageNum);
+        model.addAttribute("totalPages", allTasks.getTotalPages());
+        model.addAttribute("totalTasks", allTasks.getTotalElements());
 
         return "html/main/index";
     }
@@ -52,6 +59,7 @@ public class MainController {
     public String sendToEditTaskPage(@PathVariable("id") Long id, Model model) {
         Task task = taskService.findById(id);
         model.addAttribute("task", task);
+        System.out.println("editTask");
 
         return "html/main/editTask";
     }
