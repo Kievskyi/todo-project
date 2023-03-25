@@ -2,11 +2,15 @@ package com.denysdudnik.todo_project.configuration;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 import jakarta.persistence.EntityManagerFactory;
+import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
@@ -29,19 +33,30 @@ import java.util.Properties;
 @EnableTransactionManagement
 @EnableJpaRepositories(basePackages = "com.denysdudnik.todo_project.repository")
 @ComponentScan(basePackages = "com.denysdudnik.todo_project")
+@PropertySource(value = "classpath:application.properties")
 @RequiredArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class SpringConfig implements WebMvcConfigurer {
 
-    private final ApplicationContext applicationContext;
+    ApplicationContext applicationContext;
+
+    @Value("${spring.datasource.username}")
+    String username;
+
+    @Value("${spring.datasource.password}")
+    String password;
+
+    @Value("${spring.datasource.url}")
+    String dataSourceURL;
 
     @Bean
     public DataSource dataSource() {
         ComboPooledDataSource dataSource = new ComboPooledDataSource();
         try {
             dataSource.setDriverClass("com.mysql.cj.jdbc.Driver");
-            dataSource.setJdbcUrl("jdbc:mysql://localhost:3306/todo");
-            dataSource.setUser("root");
-            dataSource.setPassword("root");
+            dataSource.setJdbcUrl(dataSourceURL);
+            dataSource.setUser(username);
+            dataSource.setPassword(password);
         } catch (PropertyVetoException e) {
             throw new RuntimeException(e);
         }
@@ -52,7 +67,7 @@ public class SpringConfig implements WebMvcConfigurer {
     @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactory(DataSource dataSource) {
         LocalContainerEntityManagerFactoryBean emf = new LocalContainerEntityManagerFactoryBean();
-        emf.setDataSource(dataSource());
+        emf.setDataSource(dataSource);
         emf.setPackagesToScan("com.denysdudnik.todo_project.entity");
 
         HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
