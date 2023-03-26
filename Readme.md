@@ -13,6 +13,8 @@
 
 ---
 
+**IMPORTANT** : <u>Make sure that your ports 3306 and 8080 are available in local machine!</u>
+
 1. Clone the application
 
 > https://github.com/Kievskyi/todo-project.git
