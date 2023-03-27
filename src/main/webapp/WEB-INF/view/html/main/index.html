@@ -127,7 +127,7 @@
             <td th:text="${task.description}">Description</td>
             <td th:text="${task.status}">Status</td>
             <td>
-                <form th:action="@{/tasks/{id}(id=${task.getId()})}" method="get">
+                <form th:action="@{/tasks/editTask/{id}(id=${task.getId()})}" method="get">
                     <input type="hidden" name="id" th:value="${task.id}"/>
                     <button class="task-info__button_table" type="submit">Edit</button>
                 </form>
@@ -167,24 +167,10 @@
         </div>
     </div>
 </div>
-
 <br><br>
 
-<form th:method="POST" th:action="@{/tasks/}" th:object="${task}">
-
-    <label for="description">Description: </label>
-    <input type="text" th:field="*{description}" id="description">
-    <br>
-
-    <label for="status">Status: </label>
-    <select id="status" th:field="*{status}">
-        <option th:each="status : ${T(com.denysdudnik.todo_project.enums.Status).values()}"
-                th:value="${status}"
-                th:text="${status}">
-        </option>
-    </select>
-    <br>
-    <input type="submit" value="Add">
+<form th:method="GET" th:action="@{/tasks/addTask}">
+    <input type="submit" value="New Task">
 </form>
 </body>
 </html>

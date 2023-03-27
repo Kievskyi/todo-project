@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Edit task</title>
+    <title>Add task</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -58,16 +58,15 @@
     </style>
 </head>
 <body>
-<h2>Task editing:</h2>
-<form th:method="PATCH" th:action="@{/tasks/{id}(id=${task.getId()})}" th:object="${task}">
+<form th:method="POST" th:action="@{/tasks/}" th:object="${task}">
 
-    <label for="description">Description</label>
+    <label for="description">Description: </label>
     <input type="text" th:field="*{description}" id="description">
     <b th:if="${#fields.hasErrors('description')}" th:errorclass="error" th:errors="*{description}"
        class="error_message"></b>
     <br>
 
-    <label for="status">Status</label>
+    <label for="status">Status: </label>
     <select id="status" th:field="*{status}">
         <option th:each="status : ${T(com.denysdudnik.todo_project.enums.Status).values()}"
                 th:value="${status}"
@@ -75,8 +74,8 @@
         </option>
     </select>
     <br>
+    <input type="submit" value="Add">
 
-    <input type="submit" value="Confirm">
 </form>
 </body>
 </html>
