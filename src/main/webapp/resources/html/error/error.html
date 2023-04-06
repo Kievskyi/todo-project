@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Add task</title>
+    <link href="/resources/css/error.css" rel="stylesheet">
+</head>
+<body>
+<form th:method="GET" th:action="@{/tasks/}" th:object="${errorMessage}">
+
+    <h2 th:text="${errorMessage}"></h2>
+    <button type="submit">Back</button>
+
+</form>
+</body>
+</html>

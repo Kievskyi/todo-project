@@ -5,7 +5,6 @@ import jakarta.servlet.ServletException;
 import org.springframework.web.filter.HiddenHttpMethodFilter;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
-
 public class SpringWebInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
 
     @Override
@@ -25,6 +24,7 @@ public class SpringWebInitializer extends AbstractAnnotationConfigDispatcherServ
 
     @Override
     public void onStartup(ServletContext aServletContext) throws ServletException {
+        aServletContext.setInitParameter("spring.profiles.active", "prod");
         super.onStartup(aServletContext);
         registerHiddenFieldFilter(aServletContext);
     }

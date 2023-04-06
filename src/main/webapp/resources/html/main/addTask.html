@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Add task</title>
+    <link href="/resources/css/addPageStyle.css" rel="stylesheet">
+</head>
+<body>
+<form th:method="POST" th:action="@{/tasks/}" th:object="${task}">
+
+    <label for="description">Description: </label>
+    <input type="text" th:field="*{description}" id="description">
+    <b th:if="${#fields.hasErrors('description')}" th:errorclass="error" th:errors="*{description}"
+       class="error_message"></b>
+    <br>
+
+    <label for="status">Status: </label>
+    <select id="status" th:field="*{status}">
+        <option th:each="status : ${T(com.denysdudnik.todo_project.enums.Status).values()}"
+                th:value="${status}"
+                th:text="${status}">
+        </option>
+    </select>
+    <br>
+    <input type="submit" value="Add">
+
+</form>
+</body>
+</html>

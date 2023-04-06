@@ -2,14 +2,16 @@ package com.denysdudnik.todo_project.entity;
 
 import com.denysdudnik.todo_project.enums.Status;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.*;
-import lombok.AccessLevel;
-import lombok.Data;
+import jakarta.validation.constraints.NotBlank;
+import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 @Entity
+@Builder
 @Table(name = "task", schema = "todo")
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Task {
 
