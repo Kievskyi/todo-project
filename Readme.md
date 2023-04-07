@@ -13,7 +13,8 @@
 
 ---
 
-**IMPORTANT** : <u>Make sure that your ports 3306 and 8080 are available in local machine!</u>
+**IMPORTANT** : <u>Make sure that your ports 3306 and 8080 are available in local machine!
+Check your Task manager and in services turn off MySQL and Tomcat</u>
 
 1. Clone the application
 

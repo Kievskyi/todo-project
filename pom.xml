@@ -19,6 +19,9 @@
         <jakarta.servlet.version>6.0.0</jakarta.servlet.version>
         <mockito.jupiter.version>5.2.0</mockito.jupiter.version>
         <maven.war.plugin>3.3.2</maven.war.plugin>
+        <hamcrest.version>1.3</hamcrest.version>
+        <tomcat.embed.el.version>10.1.5</tomcat.embed.el.version>
+        <resource.path>src/main/webapp/resources</resource.path>
     </properties>
     <version>1.0-SNAPSHOT</version>
     <name>todo-project Maven Webapp</name>
@@ -103,7 +106,7 @@
         <dependency>
             <groupId>org.hamcrest</groupId>
             <artifactId>hamcrest-all</artifactId>
-            <version>1.3</version>
+            <version>${hamcrest.version}</version>
             <scope>test</scope>
         </dependency>
 
@@ -128,7 +131,7 @@
         <dependency>
             <groupId>org.apache.tomcat.embed</groupId>
             <artifactId>tomcat-embed-el</artifactId>
-            <version>10.1.5</version>
+            <version>${tomcat.embed.el.version}</version>
         </dependency>
     </dependencies>
 
@@ -143,7 +146,7 @@
         </plugins>
         <resources>
             <resource>
-                <directory>src/main/webapp/resources</directory>
+                <directory>${resource.path}</directory>
             </resource>
         </resources>
     </build>
